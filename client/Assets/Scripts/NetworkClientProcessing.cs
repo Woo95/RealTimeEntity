@@ -21,22 +21,25 @@ static public class NetworkClientProcessing
 		{
 			case ServerToClientSignifiers.PTS_CONNECTED_PLAYER:
 				{
+					Debug.Log("PTS_CONNECTED_PLAYER");
+					int connectedPlayers = int.Parse(csv[1]);
 
+                    UI_Gameplay.instance.SetConnectedPlayers(connectedPlayers);
 				}
 				break;
 			case ServerToClientSignifiers.PTS_BALLOON_LIST:
 				{
-
+					Debug.Log("PTS_BALLOON_LIST");
 				}
 				break;
 			case ServerToClientSignifiers.PTS_BALLOON_SPAWN:
 				{
-
+					Debug.Log("PTS_BALLOON_SPAWN");
 				}
 				break;
 			case ServerToClientSignifiers.PTS_BALLOON_POP:
 				{
-
+					Debug.Log("PTS_BALLOON_POP");
 				}
 				break;
 		}
