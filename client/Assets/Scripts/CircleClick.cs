@@ -12,7 +12,7 @@ public class CircleClick : MonoBehaviour
 	}
 
 	void OnMouseDown()
-    {
+	{
 		string msg = ClientToServerSignifiers.PTC_BALLOON_POP + "," + m_BalloonData.m_ID;
 		NetworkClientProcessing.SendMessageToServer(msg, TransportPipeline.ReliableAndInOrder);
     }
