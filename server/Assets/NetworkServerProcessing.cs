@@ -48,7 +48,6 @@ static public class NetworkServerProcessing
     #endregion
 
     #region Connection Events
-
     static public void ConnectionEvent(int clientConnectionID)
     {
         Debug.Log("Client connection, ID == " + clientConnectionID);
