@@ -4,7 +4,6 @@ using UnityEngine;
 
 static public class NetworkClientProcessing
 {
-
     #region Send and Receive Data Functions
     static public void ReceivedMessageFromServer(string msg, TransportPipeline pipeline)
     {

@@ -13,14 +13,29 @@ static public class NetworkServerProcessing
         string[] csv = msg.Split(',');
         int signifier = int.Parse(csv[0]);
 
-        if (signifier == ClientToServerSignifiers.asd)
+        switch (signifier)
         {
+            case ClientToServerSignifiers.PTC_CONNECTED_PLAYER:
+                {
 
-        }
-        // else if (signifier == ClientToServerSignifiers.asd)
-        // {
+                }
+                break;
+			case ClientToServerSignifiers.PTC_BALLOON_LIST:
+                {
 
-        // }
+                }
+				break;
+			case ClientToServerSignifiers.PTC_BALLOON_SPAWN:
+                {
+
+                }
+				break;
+			case ClientToServerSignifiers.PTC_BALLOON_POP:
+                {
+
+                }
+				break;
+		}
 
         //gameLogic.DoSomething();
     }
@@ -67,12 +82,18 @@ static public class NetworkServerProcessing
 #region Protocol Signifiers
 static public class ClientToServerSignifiers
 {
-    public const int asd = 1;
+    public const int PTC_CONNECTED_PLAYER   = 1;
+    public const int PTC_BALLOON_LIST       = 2;
+	public const int PTC_BALLOON_SPAWN      = 3;
+	public const int PTC_BALLOON_POP        = 4;
 }
 
 static public class ServerToClientSignifiers
 {
-    public const int asd = 1;
+	public const int PTS_CONNECTED_PLAYER   = 1;
+	public const int PTS_BALLOON_LIST       = 2;
+	public const int PTS_BALLOON_SPAWN      = 3;
+	public const int PTS_BALLOON_POP        = 4;
 }
 
 #endregion
