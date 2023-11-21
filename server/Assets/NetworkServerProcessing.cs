@@ -39,6 +39,7 @@ static public class NetworkServerProcessing
 
         //gameLogic.DoSomething();
     }
+
     static public void SendMessageToClient(string msg, int clientConnectionID, TransportPipeline pipeline)
     {
         networkServer.SendMessageToClient(msg, clientConnectionID, pipeline);
