@@ -7,10 +7,12 @@ public class BalloonData
 {
 	public int m_ID;
 	public Vector2 m_Position;
-	public BalloonData(int id, Vector2 position)
+	public CircleClick m_CircleClick;
+	public BalloonData(int id, Vector2 position, CircleClick circleClick)
 	{
 		m_ID = id;
 		m_Position = position;
+		m_CircleClick = circleClick;
 	}
 	public override string ToString()
 	{
@@ -41,14 +43,23 @@ public class GameLogic : MonoBehaviour
 
 		balloon.AddComponent<SpriteRenderer>();
 		balloon.GetComponent<SpriteRenderer>().sprite = m_CircleTexture;
-		balloon.AddComponent<CircleClick>();
+		CircleClick circleClick = balloon.AddComponent<CircleClick>();
 		balloon.AddComponent<CircleCollider2D>();
 
 		Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0));
 		pos.z = 0;
 		balloon.transform.position = pos;
 
-		BalloonData spawnedBalloon = new BalloonData(balloonID, screenPosition);
+		BalloonData spawnedBalloon = new BalloonData(balloonID, screenPosition, circleClick);
 		m_SpawnedBalloons.Add(spawnedBalloon);
+
+		circleClick.AddData(spawnedBalloon);
+	}
+
+	public void PopBalloon(BalloonData popBalloonData)
+	{
+		UI_Gameplay.instance.AddPop();
+
+		Destroy(popBalloonData.m_CircleClick.gameObject);
 	}
 }

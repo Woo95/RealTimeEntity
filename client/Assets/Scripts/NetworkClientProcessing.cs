@@ -58,6 +58,17 @@ static public class NetworkClientProcessing
 			case ServerToClientSignifiers.PTS_BALLOON_POP:
 				{
 					Debug.Log("PTS_BALLOON_POP");
+					int popBalloonID = int.Parse(csv[1]);
+
+					foreach (BalloonData popBalloon in gameLogic.m_SpawnedBalloons)
+					{
+						if (popBalloon.m_ID == popBalloonID)
+						{
+							gameLogic.m_SpawnedBalloons.Remove(popBalloon);
+							gameLogic.PopBalloon(popBalloon);
+							break;
+						}
+					}
 				}
 				break;
 		}
