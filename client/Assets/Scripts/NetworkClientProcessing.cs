@@ -35,6 +35,13 @@ static public class NetworkClientProcessing
 			case ServerToClientSignifiers.PTS_BALLOON_SPAWN:
 				{
 					Debug.Log("PTS_BALLOON_SPAWN");
+                    int balloonID = int.Parse(csv[1]); 
+
+                    float x = float.Parse(csv[2]);
+					float y = float.Parse(csv[3]);
+					Vector2 spawnPos = new Vector2(x, y);
+
+                    gameLogic.SpawnNewBalloon(balloonID, spawnPos);
 				}
 				break;
 			case ServerToClientSignifiers.PTS_BALLOON_POP:
@@ -43,9 +50,6 @@ static public class NetworkClientProcessing
 				}
 				break;
 		}
-
-		//gameLogic.DoSomething();
-
 	}
 
     #endregion
