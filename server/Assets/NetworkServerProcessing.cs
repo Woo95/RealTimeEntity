@@ -62,6 +62,7 @@ static public class NetworkServerProcessing
         {
 			SendMessageToClient(msg, connectedPlayerID, TransportPipeline.ReliableAndInOrder);
 		}
+        SendMessageToClient(SendSpawnedBalloonListEvent(), clientConnectionID, TransportPipeline.ReliableAndInOrder);
 	}
     static public void DisconnectionEvent(int clientConnectionID)
     {
@@ -77,7 +78,7 @@ static public class NetworkServerProcessing
 
     #endregion
 
-    #region Spawn Events
+    #region Balloon Events
     static public void SpawnBalloonEvent(BalloonData balloonData)
     {
         string msg = ServerToClientSignifiers.PTS_BALLOON_SPAWN + "," + balloonData.ToString();
@@ -85,6 +86,16 @@ static public class NetworkServerProcessing
 		{
 			SendMessageToClient(msg, connectedPlayerID, TransportPipeline.ReliableAndInOrder);
 		}
+	}
+    static public string SendSpawnedBalloonListEvent()
+    {
+		string msg = ServerToClientSignifiers.PTS_BALLOON_LIST.ToString();
+
+        foreach (var spawnedBalloon in gameLogic.m_SpawnedBalloons)
+        {
+			msg += "," + spawnedBalloon.ToString();
+		}
+        return msg;     // PTS_BALLOON_LIST,ID,pos.x,pos.y,
 	}
     #endregion
 
