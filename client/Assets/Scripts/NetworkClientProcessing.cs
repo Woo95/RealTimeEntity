@@ -4,7 +4,12 @@ using UnityEngine;
 
 static public class NetworkClientProcessing
 {
-    #region Send and Receive Data Functions
+	#region Send and Receive Data Functions
+	static public void SendMessageToServer(string msg, TransportPipeline pipeline)
+	{
+		networkClient.SendMessageToServer(msg, pipeline);
+	}
+
     static public void ReceivedMessageFromServer(string msg, TransportPipeline pipeline)
     {
         Debug.Log("Network msg received =  " + msg + ", from pipeline = " + pipeline);
@@ -12,23 +17,33 @@ static public class NetworkClientProcessing
         string[] csv = msg.Split(',');
         int signifier = int.Parse(csv[0]);
 
-        // if (signifier == ServerToClientSignifiers.asd)
-        // {
+		switch (signifier)
+		{
+			case ServerToClientSignifiers.PTS_CONNECTED_PLAYER:
+				{
 
-        // }
-        // else if (signifier == ServerToClientSignifiers.asd)
-        // {
+				}
+				break;
+			case ServerToClientSignifiers.PTS_BALLOON_LIST:
+				{
 
-        // }
+				}
+				break;
+			case ServerToClientSignifiers.PTS_BALLOON_SPAWN:
+				{
 
-        //gameLogic.DoSomething();
+				}
+				break;
+			case ServerToClientSignifiers.PTS_BALLOON_POP:
+				{
 
-    }
+				}
+				break;
+		}
 
-    static public void SendMessageToServer(string msg, TransportPipeline pipeline)
-    {
-        networkClient.SendMessageToServer(msg, pipeline);
-    }
+		//gameLogic.DoSomething();
+
+	}
 
     #endregion
 
@@ -80,12 +95,18 @@ static public class NetworkClientProcessing
 #region Protocol Signifiers
 static public class ClientToServerSignifiers
 {
-    public const int asd = 1;
+    public const int PTC_CONNECTED_PLAYER   = 1;
+    public const int PTC_BALLOON_LIST       = 2;
+    public const int PTC_BALLOON_SPAWN      = 3;
+    public const int PTC_BALLOON_POP        = 4;
 }
 
 static public class ServerToClientSignifiers
 {
-    public const int asd = 1;
+	public const int PTS_CONNECTED_PLAYER   = 1;
+	public const int PTS_BALLOON_LIST       = 2;
+	public const int PTS_BALLOON_SPAWN      = 3;
+	public const int PTS_BALLOON_POP        = 4;
 }
 
 #endregion
