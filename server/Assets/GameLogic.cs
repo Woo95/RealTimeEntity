@@ -24,6 +24,7 @@ public class GameLogic : MonoBehaviour
 
 	public List<BalloonData> m_SpawnedBalloons = new List<BalloonData>();
 	int m_BalloonID = 0;
+	int CONST_MAX_BALLOON_AMOUNT = 20;
 	float CONST_DURATION_NEXT_BALLOON_TIME = 3.0f;
 	float m_DurationUntilNextBalloon;
 
@@ -53,6 +54,9 @@ public class GameLogic : MonoBehaviour
 		//    NetworkServerProcessing.SendMessageToClient("2,Hello client's world, sincerely your network server", 0, TransportPipeline.ReliableAndInOrder);
 
 		if (m_ConnectedPlayers.Count <= 0)
+			return;
+
+		if (m_SpawnedBalloons.Count >= CONST_MAX_BALLOON_AMOUNT)
 			return;
 
 		m_DurationUntilNextBalloon -= Time.deltaTime;
