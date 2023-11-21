@@ -52,11 +52,25 @@ static public class NetworkServerProcessing
     static public void ConnectionEvent(int clientConnectionID)
     {
         Debug.Log("Client connection, ID == " + clientConnectionID);
+        gameLogic.Add(clientConnectionID);
+
+        string msg = ClientToServerSignifiers.PTC_CONNECTED_PLAYER + "," + gameLogic.Count();
+        foreach (int connectedPlayerID in gameLogic.connectedPlayers)
+        {
+			SendMessageToClient(msg, connectedPlayerID, TransportPipeline.ReliableAndInOrder);
+		}
 	}
     static public void DisconnectionEvent(int clientConnectionID)
     {
         Debug.Log("Client disconnection, ID == " + clientConnectionID);
-    }
+		gameLogic.Remove(clientConnectionID);
+
+		string msg = ClientToServerSignifiers.PTC_CONNECTED_PLAYER + "," + gameLogic.Count();
+		foreach (int connectedPlayerID in gameLogic.connectedPlayers)
+		{
+			SendMessageToClient(msg, connectedPlayerID, TransportPipeline.ReliableAndInOrder);
+		}
+	}
 
     #endregion
 
