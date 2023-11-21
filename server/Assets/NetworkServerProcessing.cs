@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 static public class NetworkServerProcessing
@@ -38,8 +39,18 @@ static public class NetworkServerProcessing
             */
 			case ClientToServerSignifiers.PTC_BALLOON_POP:
                 {
+					int popBalloonID = int.Parse(csv[1]);
 
-                }
+                    foreach (BalloonData popBalloon in gameLogic.m_SpawnedBalloons)
+					{
+						if (popBalloon.m_ID == popBalloonID)
+                        {
+							gameLogic.m_SpawnedBalloons.Remove(popBalloon);
+                            break;
+						}
+					}
+                    SendPopBalloonEvent(popBalloonID);
+				}
 				break;
 		}
 
@@ -98,6 +109,14 @@ static public class NetworkServerProcessing
 			msg += "," + spawnedBalloon.ToString();
 		}
         return msg;     // PTS_BALLOON_LIST,ID,pos.x,pos.y,
+	}
+    static public void SendPopBalloonEvent(int popBalloonID)
+    {
+		string popBalloonMsg = ServerToClientSignifiers.PTS_BALLOON_POP + "," + popBalloonID;
+		foreach (int connectedPlayerID in gameLogic.m_ConnectedPlayers)
+		{
+			SendMessageToClient(popBalloonMsg, connectedPlayerID, TransportPipeline.ReliableAndInOrder);
+		}
 	}
     #endregion
 
