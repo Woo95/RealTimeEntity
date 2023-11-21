@@ -30,6 +30,17 @@ static public class NetworkClientProcessing
 			case ServerToClientSignifiers.PTS_BALLOON_LIST:
 				{
 					Debug.Log("PTS_BALLOON_LIST");
+                    int balloonID; float x, y; Vector2 spawnPos;
+                    for ( int i= 1; i < csv.Length; i += 3 )
+                    {
+						balloonID = int.Parse(csv[i]);
+
+						x = float.Parse(csv[i+1]);
+						y = float.Parse(csv[i+2]);
+						spawnPos = new Vector2(x, y);
+
+						gameLogic.SpawnNewBalloon(balloonID, spawnPos);
+					}
 				}
 				break;
 			case ServerToClientSignifiers.PTS_BALLOON_SPAWN:

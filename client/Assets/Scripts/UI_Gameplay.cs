@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86;
 
 public class UI_Gameplay : MonoBehaviour
 {
@@ -22,14 +23,22 @@ public class UI_Gameplay : MonoBehaviour
 
 	public Text connectedPlayer;
 	public Text pop;
+	int popCount = 0;
 
 	private void Start()
 	{
-		pop.text = "0";
+		popCount = 0;
+		pop.text = popCount.ToString();
 	}
 
 	public void SetConnectedPlayers(int count)
 	{
 		connectedPlayer.text = count.ToString();
+	}
+
+	public void AddPop()
+	{
+		popCount++;
+		pop.text = popCount.ToString();
 	}
 }
