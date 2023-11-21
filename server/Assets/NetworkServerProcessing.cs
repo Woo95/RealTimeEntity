@@ -15,21 +15,25 @@ static public class NetworkServerProcessing
 
         switch (signifier)
         {
+            /*
             case ClientToServerSignifiers.PTC_CONNECTED_PLAYER:
                 {
 
                 }
                 break;
+            */
 			case ClientToServerSignifiers.PTC_BALLOON_LIST:
                 {
 
                 }
 				break;
+			/*
 			case ClientToServerSignifiers.PTC_BALLOON_SPAWN:
                 {
 
                 }
 				break;
+            */
 			case ClientToServerSignifiers.PTC_BALLOON_POP:
                 {
 
@@ -53,8 +57,8 @@ static public class NetworkServerProcessing
         Debug.Log("Client connection, ID == " + clientConnectionID);
         gameLogic.Add(clientConnectionID);
 
-        string msg = ClientToServerSignifiers.PTC_CONNECTED_PLAYER + "," + gameLogic.Count();
-        foreach (int connectedPlayerID in gameLogic.connectedPlayers)
+        string msg = ServerToClientSignifiers.PTS_CONNECTED_PLAYER + "," + gameLogic.Count();
+        foreach (int connectedPlayerID in gameLogic.m_ConnectedPlayers)
         {
 			SendMessageToClient(msg, connectedPlayerID, TransportPipeline.ReliableAndInOrder);
 		}
@@ -64,13 +68,24 @@ static public class NetworkServerProcessing
         Debug.Log("Client disconnection, ID == " + clientConnectionID);
 		gameLogic.Remove(clientConnectionID);
 
-		string msg = ClientToServerSignifiers.PTC_CONNECTED_PLAYER + "," + gameLogic.Count();
-		foreach (int connectedPlayerID in gameLogic.connectedPlayers)
+		string msg = ServerToClientSignifiers.PTS_CONNECTED_PLAYER + "," + gameLogic.Count();
+		foreach (int connectedPlayerID in gameLogic.m_ConnectedPlayers)
 		{
 			SendMessageToClient(msg, connectedPlayerID, TransportPipeline.ReliableAndInOrder);
 		}
 	}
 
+    #endregion
+
+    #region Spawn Events
+    static public void SpawnBalloonEvent(BalloonData balloonData)
+    {
+        string msg = ServerToClientSignifiers.PTS_BALLOON_SPAWN + "," + balloonData.ToString();
+		foreach (int connectedPlayerID in gameLogic.m_ConnectedPlayers)
+		{
+			SendMessageToClient(msg, connectedPlayerID, TransportPipeline.ReliableAndInOrder);
+		}
+	}
     #endregion
 
     #region Setup

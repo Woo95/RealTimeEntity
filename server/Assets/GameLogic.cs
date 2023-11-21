@@ -12,6 +12,10 @@ public class BalloonData
 		m_ID = id;
 		m_Position = position;
 	}
+	public override string ToString()
+	{
+		return m_ID + "," + m_Position.x + "," + m_Position.y;
+	}
 }
 
 public class GameLogic : MonoBehaviour
